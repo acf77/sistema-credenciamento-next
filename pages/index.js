@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 
 import EventsCard from "../components/EventsCard";
 
 export const HomePage = ({ eventos }) => {
+  const [eventData, seEventData] = useState(eventos);
+
   return (
     <Container className="my-3">
       <h1>Gerasom</h1>
       <Button>Criar evento</Button>
-      {eventos.map((event) => (
-        <EventsCard {...event} />
+      {eventData.map((event) => (
+        <EventsCard key={event.id} {...event} />
       ))}
     </Container>
   );
