@@ -3,6 +3,7 @@ import { Button, Container } from "react-bootstrap";
 import axios from "axios";
 
 import EventsCard from "../components/EventsCard";
+import Header from "../components/Header";
 
 export const HomePage = () => {
   const [eventData, seEventData] = useState([]);
@@ -16,13 +17,16 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <Container className="my-3">
-      <h1>Gerasom</h1>
-      <Button>Criar evento</Button>
-      {eventData.map((event) => (
-        <EventsCard key={event.id} {...event} />
-      ))}
-    </Container>
+    <>
+      {/* <Header /> */}
+      <Container className="my-3">
+        <h1>Gerasom</h1>
+        <Button>Criar evento</Button>
+        {eventData.map((event) => (
+          <EventsCard key={event.id} {...event} />
+        ))}
+      </Container>
+    </>
   );
 };
 

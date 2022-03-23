@@ -1,0 +1,1 @@
+{"c":["webpack"],"r":["pages/QrReader"],"m":["./components/QrResultCard.js","./node_modules/next/dist/build/webpack/loaders/next-client-pages-loader.js?page=%2FQrReader&absolutePagePath=%2FUsers%2Facf%2FDocuments%2FGitHub%2Fgerasom-credenciamento%2Fclient%2Fpages%2FQrReader.js!","./node_modules/react-qr-reader/dist/esm/index.js","./pages/QrReader.js"]}

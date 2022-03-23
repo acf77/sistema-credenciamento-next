@@ -1,38 +1,48 @@
-import { Card, Stack, Form, Button } from "react-bootstrap";
+import { Card, Stack, Button } from "react-bootstrap";
 import { FaWhatsapp } from "react-icons/fa";
-import { HiOutlineMail, HiTrash } from "react-icons/hi";
+import { HiOutlineMail, HiTrash, HiQrcode } from "react-icons/hi";
+import axios from "axios";
 
-const InviteeCard = (c, isEventStarted) => {
+const InviteeCard = (props) => {
+  const handleQrCode = async () => {
+    const call = await axios.post(
+      `http://localhost:8080/api/qrcode/${props.event_id}/${props._id}`
+    );
+    // <QRCode value={`${props.event_id}, ${props._id}`} />;
+  };
+
   return (
     <Card className="p-3 m-3">
       <Stack direction="horizontal">
         <Stack>
           <span>
             <strong>Nome: </strong>
-            {c.nome}
+            {props.nome}
           </span>
           <span>
             <strong>Celular: </strong>
             <FaWhatsapp />{" "}
             <a
               target="_blank"
-              href={`https://api.whatsapp.com/send?phone=55${c.celular}`}
+              href={`https://api.whatsapp.com/send?phone=55${props.celular}`}
             >
-              {c.celular}
+              {props.celular}
             </a>
           </span>
           <span>
             <strong>Email: </strong>
             <HiOutlineMail />{" "}
-            <a target="_blank" href={`mailto:${c.email}`}>
-              {c.email}
+            <a target="_blank" href={`mailto:${props.email}`}>
+              {props.email}
             </a>
           </span>
         </Stack>
 
         <Stack direction="horizontal" gap={3}>
-          {/* <QRCode value={`${c.email}`} /> */}
-          <span>Presente?</span> <Form.Check disabled={isEventStarted} />
+          <Button onClick={handleQrCode}>
+            <HiQrcode /> Enviar QR Code
+          </Button>
+          {/* <span>Presente?</span> <Form.Check disabled={isEventStarted} /> */}
           <Button variant="danger">
             <HiTrash />
           </Button>

@@ -1,7 +1,9 @@
 import { QrReader } from "react-qr-reader";
-import { Button, Card, Container, Stack } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
+
+import QrResultCard from "../components/QrResultCard";
 
 const Qr = () => {
   const [qrData, setQrData] = useState();
@@ -20,30 +22,16 @@ const Qr = () => {
   return (
     <Container>
       {qrData ? (
-        <Stack gap={3}>
-          <Card className="p-5 m-5">
-            <h4>Seja bem-vindo, {qrData.nome}! </h4>
-            <span className="my-3">
-              Voce tem direito a {qrData.senhas} senhas.
-            </span>
-            <Button className="my-3" onClick={() => setQrData()}>
-              Retornar
-            </Button>
-            {setTimeout(() => {
-              setQrData();
-            }, 10000)}
-          </Card>
-        </Stack>
+        <QrResultCard onClick={setQrData} {...qrData} />
       ) : (
         <Container style={{ width: 800 }}>
           <QrReader
-            scanDelay={1000}
+            scanDelay={3000}
             // constraints={{ facingMode: "user" }}
             onResult={(result, error) => {
               if (result) {
                 handleQrCheckIn({ qr: result.text });
               }
-
               if (error) {
                 console.error(error);
               }
@@ -51,7 +39,6 @@ const Qr = () => {
           />
         </Container>
       )}
-      {/* <QrCodeResultDialog isOpen={isOpen} onDismiss={onDismiss} {...qrData} /> */}
     </Container>
   );
 };

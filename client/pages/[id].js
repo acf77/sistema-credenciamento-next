@@ -20,6 +20,8 @@ export const StartedEventPage = ({ eventos }) => {
     setIsEventStarted(!isEventStarted);
   };
 
+  const id = { event_id: eventData._id };
+
   return (
     <Container className="my-3">
       <Link href="/">
@@ -62,10 +64,15 @@ export const StartedEventPage = ({ eventos }) => {
               return c.nome.toLowerCase().includes(search) || c.nome === search;
             })
             .map((c) => (
-              <InviteeCard key={eventos.id} {...c} {...isEventStarted} />
+              <InviteeCard
+                key={eventos.id}
+                {...c}
+                {...id}
+                {...isEventStarted}
+              />
             ))
         : eventData.listaConvidados.map((c) => (
-            <InviteeCard key={eventos.id} {...c} {...isEventStarted} />
+            <InviteeCard key={eventos.id} {...c} {...id} {...isEventStarted} />
           ))}
     </Container>
   );
