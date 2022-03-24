@@ -1,13 +1,25 @@
 import { Card, Stack, Button } from "react-bootstrap";
 import { FaWhatsapp } from "react-icons/fa";
-import { HiOutlineMail, HiTrash, HiQrcode } from "react-icons/hi";
+import {
+  HiOutlineMail,
+  HiTrash,
+  HiQrcode,
+  HiOutlineCheckCircle,
+} from "react-icons/hi";
+
 import axios from "axios";
+import { useState } from "react";
 
 const InviteeCard = (props) => {
+  const [emailSent, setEmailSent] = useState(false);
+
   const handleQrCode = async () => {
     const call = await axios.post(
       `http://localhost:8080/api/qrcode/${props.event_id}/${props._id}`
     );
+
+    setEmailSent(true);
+
     // <QRCode value={`${props.event_id}, ${props._id}`} />;
   };
 
