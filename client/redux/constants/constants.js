@@ -1,0 +1,4 @@
+export const ADD_EVENT_REQUEST = "ADD_EVENT_REQUEST";
+export const ADD_EVENT_SUCCESS = "ADD_EVENT_SUCCESS";
+export const ADD_EVENT_FAIL = "ADD_EVENT_FAIL";
+export const DELETE_EVENT = "DELETE_EVENT";

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Container, Card, Button, Stack, FormControl } from "react-bootstrap";
-import QRCode from "react-qr-code";
 import { HiUserAdd, HiHome } from "react-icons/hi";
+import { FaWhatsapp } from "react-icons/fa";
 
 import InviteeCard from "../components/InviteeCard";
+import EventInfoCard from "../components/EventInfoCard";
 import AddInviteeDialog from "../components/AddInviteeDialog";
 
 export const StartedEventPage = ({ eventos }) => {
@@ -31,13 +32,9 @@ export const StartedEventPage = ({ eventos }) => {
       </Link>
       <Card className="p-3 m-3">
         <Stack direction="horizontal" gap={3}>
-          <Stack>
-            <h2>{eventData.nome}</h2>
-            <span>Data: {eventData.data}</span>
-            <span>Local: {eventData.local}</span>
-            <span>Total de convidados: {eventData.listaConvidados.length}</span>
-          </Stack>
+          <EventInfoCard {...eventData} />
           <Button
+            className="ms-auto"
             variant={isEventStarted ? "danger" : "success"}
             onClick={handleEventStart}
           >

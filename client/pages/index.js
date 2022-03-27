@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
 import EventsCard from "../components/EventsCard";
 import Header from "../components/Header";
+import { addEvent } from "../redux/actions/eventActions";
+import Link from "next/link";
 
 export const HomePage = () => {
+  const dispatch = useDispatch();
+
   const [eventData, seEventData] = useState([]);
 
   useEffect(() => {
@@ -21,7 +26,9 @@ export const HomePage = () => {
       {/* <Header /> */}
       <Container className="my-3">
         <h1>Gerasom</h1>
-        <Button>Criar evento</Button>
+        <Link href="/novo-evento">
+          <Button onClick={() => dispatch(addEvent())}>Criar evento</Button>
+        </Link>
         {eventData.map((event) => (
           <EventsCard key={event.id} {...event} />
         ))}

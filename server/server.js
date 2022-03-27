@@ -9,7 +9,9 @@ import Event from "./db/models/eventSchema.js";
 
 const app = express();
 const port = 8080;
-const urlParser = bodyParser.urlencoded({ extended: true });
+
+// accept json requests
+const urlParser = bodyParser.json({ extended: true });
 
 connectDB();
 
@@ -30,6 +32,21 @@ app.get("/api/events", urlParser, (req, res) => {
     }
   };
   getAllFromDb();
+});
+
+// @POST create a new event
+app.post("/api/events", urlParser, (req, res) => {
+  const { body } = req;
+
+  const addToDb = async () => {
+    try {
+      const event = await Event.create(body);
+      res.status(200).json(event);
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  };
+  addToDb();
 });
 
 // @GET returns event by id

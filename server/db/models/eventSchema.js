@@ -42,6 +42,18 @@ const eventSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    responsavelNome: {
+      type: String,
+      required: true,
+    },
+    responsavelCelular: {
+      type: Number,
+      required: true,
+    },
+    responsavelEmail: {
+      type: String,
+      required: true,
+    },
     listaConvidados: [inviteesSchema],
   },
   {
