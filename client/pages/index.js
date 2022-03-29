@@ -1,49 +1,46 @@
 import { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
 import axios from "axios";
 
 import EventsCard from "../components/EventsCard";
-import Header from "../components/Header";
-import { addEvent } from "../redux/actions/eventActions";
-import Link from "next/link";
+import { Loader } from "../components/Loader";
+import { addEvent, listEvents } from "../redux/actions/eventActions";
+import { storeWrapper } from "../redux/store";
 
-export const HomePage = () => {
-  const dispatch = useDispatch();
+export const HomePage = ({ data }) => {
+  // const dispatch = useDispatch();
 
-  const [eventData, seEventData] = useState([]);
+  const [eventList, setEventList] = useState();
+  // const [isLoading, setIsLoading] = useState(true);
+
+  // const { loading, eventList } = useSelector((state) => state);
 
   useEffect(() => {
-    const getEvents = async () => {
-      const { data } = await axios.get("http://localhost:8080/api/events/");
-      seEventData(data);
-    };
-    getEvents();
-  }, []);
+    setEventList(data);
+  }, [data]);
 
   return (
     <>
-      {/* <Header /> */}
       <Container className="my-3">
         <h1>Gerasom</h1>
         <Link href="/novo-evento">
           <Button onClick={() => dispatch(addEvent())}>Criar evento</Button>
         </Link>
-        {eventData.map((event) => (
-          <EventsCard key={event.id} {...event} />
-        ))}
+        {eventList &&
+          eventList.map((event) => <EventsCard key={event.id} {...event} />)}
       </Container>
     </>
   );
 };
 
+export const getServerSideProps = async () => {
+  const { data } = await axios.get("http://localhost:8080/api/events/");
+
+  return {
+    props: { data },
+  };
+};
+
 export default HomePage;
-
-// export const getServerSideProps = async () => {
-//   const data = await fetch("http://localhost:3000/api/server");
-//   const { eventos } = await data.json();
-
-//   return {
-//     props: { eventos },
-//   };
-// };

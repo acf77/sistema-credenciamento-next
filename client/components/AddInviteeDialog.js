@@ -1,25 +1,32 @@
 import { Dialog } from "@reach/dialog";
 import { FormControl, Form, FormLabel, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
 import "@reach/dialog/styles.css";
 import { useState } from "react";
+import { addInvitee } from "../redux/actions/inviteeActions";
 
-const AddInviteeDialog = (props) => {
+export const AddInviteeDialog = (props) => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
 
-  const handleAddInviteeSubmit = () => {
-    const list = {
+  const handleAddInviteeSubmit = (e) => {
+    const inviteeData = {
       nome: name,
       celular: phone,
       email: email,
       senhas: pass,
+      _id: props._id,
     };
 
-    props[0].listaConvidados.push(list);
+    dispatch(addInvitee(inviteeData));
+
     props.onDismiss();
+    // window.location.reload();
   };
 
   return (
