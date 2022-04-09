@@ -55,6 +55,10 @@ const eventSchema = mongoose.Schema(
       required: true,
     },
     listaConvidados: [inviteesSchema],
+    isEventStarted: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     timestamps: true,
