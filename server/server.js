@@ -112,6 +112,29 @@ app.put("/api/event/invitee", (req, res) => {
   addInviteeToDb();
 });
 
+// @PUT start the event
+app.put("/api/event/start/:id", (req, res) => {
+  const { params } = req;
+
+  const startEventToDb = async () => {
+    try {
+      const event = await Event.findById(params.id);
+
+      const updateEventStart = await Event.updateOne(
+        { _id: params.id },
+        {
+          $set: { isEventStarted: !event.isEventStarted },
+        }
+      );
+
+      res.status(200).json(updateEventStart);
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  };
+  startEventToDb();
+});
+
 // @DELETE delete invitees from event
 app.post("/api/event/invitee", (req, res) => {
   const { _id, eventId } = req.body;

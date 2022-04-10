@@ -54,6 +54,10 @@ const eventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    isEventStarted: {
+      type: Boolean,
+      required: true,
+    },
     listaConvidados: [inviteesSchema],
   },
   {

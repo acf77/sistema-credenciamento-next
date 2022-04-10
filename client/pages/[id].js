@@ -21,7 +21,7 @@ export const StartedEventPage = ({ data, eventId }) => {
 
   useEffect(() => {
     setEventList(data);
-    // console.log(data._id);
+    // console.log(data);
   }, [data, eventList]);
 
   // const { isLoading } = useSelector((state) => state);
@@ -32,10 +32,7 @@ export const StartedEventPage = ({ data, eventId }) => {
   const handleEventStart = async () => {
     await axios({
       method: "PUT",
-      url: `http://localhost:8080/api/events/start/${data._id}`,
-      headers: {
-        "Content-Type": "text/html",
-      },
+      url: `http://localhost:8080/api/event/start/${data._id}`,
     });
     window.location.reload();
   };
@@ -74,7 +71,11 @@ export const StartedEventPage = ({ data, eventId }) => {
           className="p-3 m-3"
           placeholder="Buscar convidados"
         />
-        <Button className="m-3" onClick={handleAddInvitee}>
+        <Button
+          className="m-3"
+          disabled={data.isEventStarted}
+          onClick={handleAddInvitee}
+        >
           <HiUserAdd /> Adicionar convidado
         </Button>
       </Stack>
