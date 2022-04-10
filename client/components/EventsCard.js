@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button, Card, Stack } from "react-bootstrap";
 
-import { HiEye } from "react-icons/hi";
+import { HiEye, HiCheckCircle } from "react-icons/hi";
 
 import "@reach/dialog/styles.css";
 
@@ -21,6 +21,13 @@ export const EventsCard = (event) => {
               <HiEye /> Visualizar evento
             </Button>
           </Link>
+          <span variant="success">
+            {event.isEventStarted && (
+              <strong>
+                <HiCheckCircle /> Evento iniciado!
+              </strong>
+            )}
+          </span>
         </Stack>
       </Stack>
     </Card>

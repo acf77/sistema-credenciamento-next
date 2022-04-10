@@ -52,8 +52,16 @@ export const StartedEventPage = ({ data, eventId }) => {
         <Button
           variant={data.isEventStarted ? "danger" : "success"}
           onClick={handleEventStart}
+          disabled={data.isEventStarted}
+          className="mb-3"
         >
           {data.isEventStarted ? "Evento iniciado!" : "Iniciar evento"}
+        </Button>
+        <Button
+          variant={data.isEventStarted ? "primary" : "success"}
+          disabled={!data.isEventStarted}
+        >
+          Finalizar evento
         </Button>
       </Card>
       <h4 className="mx-3">Lista de convidados</h4>
