@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { Button, Container, Stack } from "react-bootstrap";
 import Link from "next/link";
 import axios from "axios";
-import Header from "../components/Header";
 
 import { HiQrcode, HiPlusCircle } from "react-icons/hi";
 
 import EventsCard from "../components/EventsCard";
-import { useSelector } from "react-redux";
 
 export const HomePage = ({ data }) => {
   const [eventList, setEventList] = useState();
@@ -21,7 +19,6 @@ export const HomePage = ({ data }) => {
 
   return (
     <>
-      <Header />
       <Container className="my-3">
         {/* <h1 className="logo">EVEMTZ</h1> */}
         <Stack direction="horizontal" gap={2}>

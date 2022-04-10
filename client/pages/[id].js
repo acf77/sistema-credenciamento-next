@@ -14,16 +14,15 @@ import { Loader } from "../components/Loader";
 export const StartedEventPage = ({ data, eventId }) => {
   // const dispatch = useDispatch();
 
-  const [eventList, setEventList] = useState();
+  const [eventList, setEventList] = useState(data);
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [eventIdState, setEventIdState] = useState({});
+  const [eventIdState, setEventIdState] = useState({ eventId: eventId });
 
   useEffect(() => {
     setEventList(data);
-    setEventIdState({ eventId: eventId });
     // console.log(data._id);
-  }, [data]);
+  }, [data, eventList]);
 
   // const { isLoading } = useSelector((state) => state);
 

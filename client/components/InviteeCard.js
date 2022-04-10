@@ -1,14 +1,10 @@
+import { useState } from "react";
 import { Card, Stack, Button } from "react-bootstrap";
 import { FaWhatsapp } from "react-icons/fa";
-import {
-  HiOutlineMail,
-  HiTrash,
-  HiQrcode,
-  HiOutlineCheckCircle,
-} from "react-icons/hi";
-
+import { HiOutlineMail, HiTrash, HiQrcode } from "react-icons/hi";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import axios from "axios";
-import { useState } from "react";
 
 const InviteeCard = (props) => {
   const [emailSent, setEmailSent] = useState(false);
@@ -23,12 +19,30 @@ const InviteeCard = (props) => {
   };
 
   const handleDeleteInvitee = async () => {
-    try {
-      await axios.post("http://localhost:8080/api/event/invitee", props);
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    }
+    confirmAlert({
+      title: "Remover convidado",
+      message: `Voce quer mesmo remover o convidado ${props.nome}?`,
+      buttons: [
+        {
+          label: "Sim",
+          onClick: async function () {
+            try {
+              await axios.post(
+                "http://localhost:8080/api/event/invitee",
+                props
+              );
+              window.location.reload();
+            } catch (error) {
+              console.error(error);
+            }
+          },
+        },
+        {
+          label: "Cancelar",
+          onClick: null,
+        },
+      ],
+    });
   };
 
   return (
