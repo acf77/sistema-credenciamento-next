@@ -13,55 +13,6 @@ import {
 
 import axios from "axios";
 
-// const data = {
-//   _id: "623795054aed623fd752fb01",
-//   nome: "Aniversario 15 anos - Alicia",
-//   data: "24-06-2022",
-//   local: "Espaço Renascença",
-//   numConvites: 100,
-//   listaConvidados: [
-//     {
-//       nome: "Joao",
-//       celular: "98994567874",
-//       email: "joao@exemplo.com",
-//       senhas: 3,
-//       _id: "623795054aed623fd752fb02",
-//       createdAt: "2022-03-20T20:56:37.638Z",
-//       updatedAt: "2022-03-20T20:56:37.638Z",
-//     },
-//     {
-//       nome: "Ana",
-//       celular: "98994569752",
-//       email: "ana@exemplo.com",
-//       senhas: 4,
-//       _id: "623795054aed623fd752fb03",
-//       createdAt: "2022-03-20T20:56:37.639Z",
-//       updatedAt: "2022-03-20T20:56:37.639Z",
-//     },
-//     {
-//       nome: "Alberto Santa",
-//       celular: "98945869752",
-//       email: "alberto@exemplo.com",
-//       senhas: 0,
-//       _id: "623795054aed623fd752fb04",
-//       createdAt: "2022-03-20T20:56:37.639Z",
-//       updatedAt: "2022-03-20T20:56:37.639Z",
-//     },
-//     {
-//       nome: "José Christyan",
-//       celular: "98994697752",
-//       email: "ze@exemplo.com",
-//       senhas: 1,
-//       _id: "623795054aed623fd752fb05",
-//       createdAt: "2022-03-20T20:56:37.640Z",
-//       updatedAt: "2022-03-20T20:56:37.640Z",
-//     },
-//   ],
-//   createdAt: "2022-03-20T20:56:37.640Z",
-//   updatedAt: "2022-03-20T20:56:37.640Z",
-//   __v: 0,
-// };
-
 export const addEvent = (eventData) => async (dispatch) => {
   try {
     dispatch({
@@ -89,47 +40,49 @@ export const addEvent = (eventData) => async (dispatch) => {
   }
 };
 
-export const listEvents = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: LIST_EVENTS_REQUEST,
-    });
+//## The actions below are being replaced by getServerSideProps at page render ##
 
-    const { data } = await axios.get("http://localhost:8080/api/events/");
+// export const listEvents = () => async (dispatch) => {
+//   try {
+//     dispatch({
+//       type: LIST_EVENTS_REQUEST,
+//     });
 
-    dispatch({
-      type: LIST_EVENTS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: LIST_EVENTS_FAIL,
-      payload: error.response.data,
-    });
-  }
-};
+//     const { data } = await axios.get("http://localhost:8080/api/events/");
 
-export const listEventDetails = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: LIST_EVENT_DETAILS_REQUEST,
-      payload: { loading: true },
-    });
+//     dispatch({
+//       type: LIST_EVENTS_SUCCESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: LIST_EVENTS_FAIL,
+//       payload: error.response.data,
+//     });
+//   }
+// };
 
-    const data = setTimeout(() => {
-      {
-        return { loading: false };
-      }
-    }, 3000);
+// export const listEventDetails = () => async (dispatch) => {
+//   try {
+//     dispatch({
+//       type: LIST_EVENT_DETAILS_REQUEST,
+//       payload: { loading: true },
+//     });
 
-    dispatch({
-      type: LIST_EVENT_DETAILS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: LIST_EVENT_DETAILS_FAIL,
-      payload: error.response.data,
-    });
-  }
-};
+//     const data = setTimeout(() => {
+//       {
+//         return { loading: false };
+//       }
+//     }, 3000);
+
+//     dispatch({
+//       type: LIST_EVENT_DETAILS_SUCCESS,
+//       payload: data,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: LIST_EVENT_DETAILS_FAIL,
+//       payload: error.response.data,
+//     });
+//   }
+// };

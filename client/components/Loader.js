@@ -16,7 +16,7 @@ export const Loader = () => {
       <Typewriter
         options={{
           strings: [
-            `<span style="color: #FFA626"><strong>EVEMTZ</strong></span>`,
+            `<span style="color: #f29616"><strong>EVEMTZ</strong></span>`,
           ],
           autoStart: true,
           loop: true,

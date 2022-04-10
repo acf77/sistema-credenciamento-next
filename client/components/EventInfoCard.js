@@ -9,7 +9,6 @@ const EventInfoCard = (props) => {
         <h2>{props.nome}</h2>
         <span>Data: {props.data}</span>
         <span>Local: {props.local}</span>
-        <span>Total de convidados: </span>
         <Card className="p-3 my-3">
           <h5 className="my-2">Responsavel do evento</h5>
           <span>

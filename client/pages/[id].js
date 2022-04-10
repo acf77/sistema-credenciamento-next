@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import Link from "next/link";
 import axios from "axios";
 
 import { Container, Card, Button, Stack, FormControl } from "react-bootstrap";
 
 import { HiUserAdd, HiHome } from "react-icons/hi";
-import { useSelector } from "react-redux";
 
 import InviteeCard from "../components/InviteeCard";
 import EventInfoCard from "../components/EventInfoCard";
 import AddInviteeDialog from "../components/AddInviteeDialog";
-import { listEventDetails } from "../redux/actions/eventActions";
 import { Loader } from "../components/Loader";
 
 export const StartedEventPage = ({ data, eventId }) => {
@@ -20,10 +17,12 @@ export const StartedEventPage = ({ data, eventId }) => {
   const [eventList, setEventList] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
-  const [isEventStarted, setIsEventStarted] = useState(false);
+  const [eventIdState, setEventIdState] = useState({});
 
   useEffect(() => {
     setEventList(data);
+    setEventIdState({ eventId: eventId });
+    // console.log(data._id);
   }, [data]);
 
   // const { isLoading } = useSelector((state) => state);
@@ -31,8 +30,15 @@ export const StartedEventPage = ({ data, eventId }) => {
   const handleAddInvitee = () => setIsOpen(true);
   const onDismiss = () => setIsOpen(false);
 
-  const handleEventStart = () => {
-    setIsEventStarted(!isEventStarted);
+  const handleEventStart = async () => {
+    await axios({
+      method: "PUT",
+      url: `http://localhost:8080/api/events/start/${data._id}`,
+      headers: {
+        "Content-Type": "text/html",
+      },
+    });
+    window.location.reload();
   };
 
   return (
@@ -48,14 +54,19 @@ export const StartedEventPage = ({ data, eventId }) => {
       <Card className="p-3 m-3">
         <EventInfoCard {...eventList} />
         <Button
-          variant={isEventStarted ? "danger" : "success"}
-          onClick={() => console.log(eventData.listaConvidados)}
+          variant={data.isEventStarted ? "danger" : "success"}
+          onClick={handleEventStart}
         >
-          {isEventStarted ? "Evento iniciado!" : "Iniciar evento"}
+          {data.isEventStarted ? "Evento iniciado!" : "Iniciar evento"}
         </Button>
       </Card>
       <h4 className="mx-3">Lista de convidados</h4>
-      <AddInviteeDialog isOpen={isOpen} onDismiss={onDismiss} {...eventList} />
+      <AddInviteeDialog
+        isOpen={isOpen}
+        onDismiss={onDismiss}
+        {...eventList}
+        {...eventIdState}
+      />
 
       {/* Search invitee box */}
       <Stack direction="horizontal">
@@ -74,22 +85,10 @@ export const StartedEventPage = ({ data, eventId }) => {
             .filter((c) => {
               return c.nome.toLowerCase().includes(search) || c.nome === search;
             })
-            .map((c) => (
-              <InviteeCard
-                key={eventList.id}
-                {...c}
-                {...eventId}
-                {...isEventStarted}
-              />
-            ))
+            .map((c) => <InviteeCard key={eventId} {...c} {...eventIdState} />)
         : eventList &&
           eventList.listaConvidados.map((c) => (
-            <InviteeCard
-              key={eventList.id}
-              {...c}
-              {...eventId}
-              {...isEventStarted}
-            />
+            <InviteeCard {...c} {...eventIdState} />
           ))}
     </Container>
   );

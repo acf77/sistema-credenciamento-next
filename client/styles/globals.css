@@ -1,3 +1,27 @@
 .Typewriter {
   font-family: "Times";
 }
+
+.logo {
+  font-family: "Times";
+  color: #f29616;
+}
+
+.btn.btn-primary {
+  background-color: #000000;
+  border-color: #000000;
+}
+.btn.btn-primary:hover {
+  background-color: #f29616;
+  border-color: #f29616;
+}
+
+.btn.btn-success {
+  background-color: #f29616;
+  border-color: #f29616;
+}
+
+.btn.btn-success:hover {
+  background-color: #000000;
+  border-color: #000000;
+}

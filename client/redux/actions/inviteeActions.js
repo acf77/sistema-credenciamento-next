@@ -13,9 +13,7 @@ export const addInvitee = (inviteeData) => async (dispatch) => {
       type: ADD_INVITEE_REQUEST,
     });
 
-    // console.log(`http://localhost:8080/api/${inviteeData._id}/invitee`);
-
-    const call = await axios({
+    await axios({
       method: "PUT",
       url: `http://localhost:8080/api/events/invitee`,
       data: inviteeData,
@@ -24,9 +22,10 @@ export const addInvitee = (inviteeData) => async (dispatch) => {
       },
     });
 
+    window.location.reload();
+
     dispatch({
       type: ADD_INVITEE_SUCCESS,
-      payload: call,
     });
   } catch (error) {
     dispatch({

@@ -1,9 +1,16 @@
 import Link from "next/link";
 import { Button, Card, Stack } from "react-bootstrap";
 
+import { HiEye } from "react-icons/hi";
+
 import "@reach/dialog/styles.css";
+import { useEffect } from "react";
 
 export const EventsCard = (event) => {
+  useEffect(() => {
+    console.log(event.listaConvidados.length);
+  }, []);
+
   return (
     <Card className="p-3 m-3">
       <Stack direction="horizontal">
@@ -15,7 +22,9 @@ export const EventsCard = (event) => {
         </Stack>
         <Stack gap={3}>
           <Link href={`/${event._id}`}>
-            <Button variant="success">Visualizar evento</Button>
+            <Button variant="success">
+              <HiEye /> Visualizar evento
+            </Button>
           </Link>
         </Stack>
       </Stack>

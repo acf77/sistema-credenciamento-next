@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Container, Stack } from "react-bootstrap";
 import Link from "next/link";
 import axios from "axios";
+import Header from "../components/Header";
+
+import { HiQrcode, HiPlusCircle } from "react-icons/hi";
 
 import EventsCard from "../components/EventsCard";
-import { Loader } from "../components/Loader";
-import { addEvent, listEvents } from "../redux/actions/eventActions";
-import { storeWrapper } from "../redux/store";
+import { useSelector } from "react-redux";
 
 export const HomePage = ({ data }) => {
-  // const dispatch = useDispatch();
-
   const [eventList, setEventList] = useState();
-  // const [isLoading, setIsLoading] = useState(true);
 
-  // const { loading, eventList } = useSelector((state) => state);
+  // const stateFromRedux = useSelector((state) => state.events);
+  // const { loading } = stateFromRedux;
 
   useEffect(() => {
     setEventList(data);
@@ -23,13 +21,23 @@ export const HomePage = ({ data }) => {
 
   return (
     <>
+      <Header />
       <Container className="my-3">
-        <h1>Gerasom</h1>
-        <Link href="/novo-evento">
-          <Button onClick={() => dispatch(addEvent())}>Criar evento</Button>
-        </Link>
+        {/* <h1 className="logo">EVEMTZ</h1> */}
+        <Stack direction="horizontal" gap={2}>
+          <Link href="/novo-evento">
+            <Button>
+              <HiPlusCircle /> Criar evento
+            </Button>
+          </Link>
+          <Link href="/QrReader">
+            <Button>
+              <HiQrcode /> Ler QR Code
+            </Button>
+          </Link>
+        </Stack>
         {eventList &&
-          eventList.map((event) => <EventsCard key={event.id} {...event} />)}
+          eventList.map((event) => <EventsCard key={event._id} {...event} />)}
       </Container>
     </>
   );

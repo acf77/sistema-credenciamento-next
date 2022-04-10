@@ -14,13 +14,21 @@ const InviteeCard = (props) => {
   const [emailSent, setEmailSent] = useState(false);
 
   const handleQrCode = async () => {
-    const call = await axios.post(
-      `http://localhost:8080/api/qrcode/${props.event_id}/${props._id}`
-    );
+    await axios.post(`http://localhost:8080/api/qrcode/email`, props);
 
     setEmailSent(true);
+    console.log(props);
 
     // <QRCode value={`${props.event_id}, ${props._id}`} />;
+  };
+
+  const handleDeleteInvitee = async () => {
+    try {
+      await axios.post("http://localhost:8080/api/event/invitee", props);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -55,7 +63,7 @@ const InviteeCard = (props) => {
             <HiQrcode /> Enviar QR Code
           </Button>
           {/* <span>Presente?</span> <Form.Check disabled={isEventStarted} /> */}
-          <Button variant="danger">
+          <Button variant="danger" onClick={handleDeleteInvitee}>
             <HiTrash />
           </Button>
         </Stack>

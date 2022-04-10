@@ -1,32 +1,45 @@
+import { useState } from "react";
 import { Dialog } from "@reach/dialog";
 import { FormControl, Form, FormLabel, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import axios from "axios";
 
 import "@reach/dialog/styles.css";
-import { useState } from "react";
-import { addInvitee } from "../redux/actions/inviteeActions";
 
 export const AddInviteeDialog = (props) => {
-  const dispatch = useDispatch();
-
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [phone, setPhone] = useState();
-  const [email, setEmail] = useState();
-  const [pass, setPass] = useState();
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
 
-  const handleAddInviteeSubmit = (e) => {
+  const handleAddInviteeSubmit = async (e) => {
+    e.preventDefault();
+
     const inviteeData = {
       nome: name,
       celular: phone,
       email: email,
       senhas: pass,
-      _id: props._id,
+      eventId: props.eventId,
     };
 
-    dispatch(addInvitee(inviteeData));
+    try {
+      const call = await axios({
+        method: "PUT",
+        url: "http://localhost:8080/api/event/invitee",
+        data: inviteeData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log(call);
+
+      // window.location.reload();
+    } catch (error) {
+      console.error(error);
+    }
 
     props.onDismiss();
-    // window.location.reload();
   };
 
   return (
