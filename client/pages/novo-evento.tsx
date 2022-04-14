@@ -13,6 +13,7 @@ import {
 import { useDispatch } from "react-redux";
 
 import { addEvent } from "../redux/actions/eventActions";
+import { withAuth } from "../utils/withAuth";
 
 const AddEventPage = () => {
   const dispatch = useDispatch();
@@ -99,4 +100,4 @@ const AddEventPage = () => {
   );
 };
 
-export default AddEventPage;
+export default withAuth(AddEventPage);

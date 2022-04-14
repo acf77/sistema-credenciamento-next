@@ -8,11 +8,13 @@
     "mongoose": "^6.2.7",
     "nodemailer": "^6.7.3",
     "nodemon": "^2.0.15",
-    "qrcode": "^1.5.0"
+    "qrcode": "^1.5.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.3"
   },
   "name": "server",
   "version": "1.0.0",
-  "description": "gersaom-server",
+  "description": "gerasom-server",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

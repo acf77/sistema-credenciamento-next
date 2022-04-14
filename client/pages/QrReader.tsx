@@ -1,9 +1,10 @@
-import { QrReader, OnResultFunction } from "react-qr-reader";
+import { QrReader } from "react-qr-reader";
 import { Container, Card } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 
 import QrResultCard from "../components/QrResultCard";
+import { withAuth } from "../utils/withAuth";
 
 const Qr = () => {
   const [qrData, setQrData] = useState<string>();
@@ -49,4 +50,4 @@ const Qr = () => {
   );
 };
 
-export default Qr;
+export default withAuth(Qr);

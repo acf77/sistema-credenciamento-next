@@ -108,7 +108,7 @@ export const getServerSideProps = async ({ params: { id } }) => {
   const eventId = id;
 
   const { data } = await axios.get(
-    `http://localhost:8080/api/events/${eventId}`
+    `http://localhost:8080/api/event/${eventId}`
   );
 
   return {

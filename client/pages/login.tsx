@@ -1,18 +1,49 @@
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 import {
   Button,
   Form,
   FormControl,
-  FormLabel,
   Row,
   Col,
   Stack,
+  Alert,
 } from "react-bootstrap";
 
-// import { Container } from './styles';
+import axios from "axios";
+import { useEffect } from "react";
 
 const LoginPage = () => {
+  useEffect(() => {
+    localStorage.getItem("userInfo") && redirect.push("/");
+  });
+
+  const redirect = useRouter();
+
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [alert, setAlert] = useState<string>();
+
+  const handleLogin = async () => {
+    const loginData = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8080/api/user/login",
+        loginData
+      );
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      redirect.push("/");
+    } catch (error) {
+      setAlert(`Email ou senha incorretos. Tente novamente. ${error.message}`);
+    }
+  };
+
   return (
     <Row>
       <Col
@@ -26,12 +57,24 @@ const LoginPage = () => {
       ></Col>
       <Col className="p-3 m-3 justify-content-center" sm={10} lg={5}>
         <Form>
-          <FormLabel>Login</FormLabel>
-          <FormControl type="email" placeholder="E-mail" className="my-3" />
-          <FormControl type="password" placeholder="Senha" />
+          {alert ? <Alert variant="danger">{alert}</Alert> : null}
+          <h3>Login</h3>
+          <FormControl
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="E-mail"
+            className="my-3"
+          />
+          <FormControl
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Senha"
+          />
         </Form>
         <Stack>
-          <Button className="my-3">Login</Button>
+          <Button onClick={handleLogin} className="my-3">
+            Login
+          </Button>
         </Stack>
         <Stack
           direction="horizontal"

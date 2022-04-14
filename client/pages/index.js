@@ -6,6 +6,7 @@ import axios from "axios";
 import { HiQrcode, HiPlusCircle } from "react-icons/hi";
 
 import EventsCard from "../components/EventsCard";
+import { withAuth } from "../utils/withAuth";
 
 export const HomePage = ({ data }) => {
   const [eventList, setEventList] = useState();
@@ -41,11 +42,11 @@ export const HomePage = ({ data }) => {
 };
 
 export const getServerSideProps = async () => {
-  const { data } = await axios.get("http://localhost:8080/api/events/");
+  const { data } = await axios.get("http://localhost:8080/api/event/");
 
   return {
     props: { data },
   };
 };
 
-export default HomePage;
+export default withAuth(HomePage);
