@@ -7,21 +7,17 @@ import { HiQrcode, HiPlusCircle } from "react-icons/hi";
 
 import EventsCard from "../components/EventsCard";
 import { withAuth } from "../utils/withAuth";
+import { Loader } from "../components/Loader.js";
 
-export const HomePage = ({ data }) => {
-  const [eventList, setEventList] = useState();
+import useListEvents from "../hooks/useListEvents";
 
-  // const stateFromRedux = useSelector((state) => state.events);
-  // const { loading } = stateFromRedux;
-
-  useEffect(() => {
-    setEventList(data);
-  }, [data]);
+export const HomePage = () => {
+  const userId = JSON.parse(sessionStorage.getItem("userInfo"));
+  const { loading, response, error } = useListEvents(userId);
 
   return (
     <>
       <Container className="my-3">
-        {/* <h1 className="logo">EVEMTZ</h1> */}
         <Stack direction="horizontal" gap={2}>
           <Link href="/novo-evento">
             <Button>
@@ -34,19 +30,21 @@ export const HomePage = ({ data }) => {
             </Button>
           </Link>
         </Stack>
-        {eventList &&
-          eventList.map((event) => <EventsCard key={event._id} {...event} />)}
+        {loading && <Loader />}
+        {/* {response && Array(response).map((e) => <span>{e.nome}</span>)} */}
+        {response &&
+          response.map((event) => <EventsCard key={event._id} {...event} />)}
       </Container>
     </>
   );
 };
 
-export const getServerSideProps = async () => {
-  const { data } = await axios.get("http://localhost:8080/api/event/");
+// export const getServerSideProps = async () => {
+//   const { data } = await axios.get("http://localhost:8080/api/event/");
 
-  return {
-    props: { data },
-  };
-};
+//   return {
+//     props: { data },
+//   };
+// };
 
 export default withAuth(HomePage);

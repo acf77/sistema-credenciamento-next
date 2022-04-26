@@ -1,21 +1,24 @@
 import { useState } from "react";
 import { Card, Stack, Button } from "react-bootstrap";
 import { FaWhatsapp } from "react-icons/fa";
-import { HiOutlineMail, HiTrash, HiQrcode } from "react-icons/hi";
+import { HiOutlineMail, HiTrash, HiQrcode, HiPrinter } from "react-icons/hi";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import axios from "axios";
+import BadgeDialog from "./BadgeDialog";
 
 const InviteeCard = (props) => {
   const [emailSent, setEmailSent] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  console.log(props);
+
+  const deleteInviteeProps = { eventId: props.event_id, _id: props._id };
 
   const handleQrCode = async () => {
     await axios.post(`http://localhost:8080/api/qrcode/email`, props);
 
     setEmailSent(true);
-    console.log(props);
-
-    // <QRCode value={`${props.event_id}, ${props._id}`} />;
   };
 
   const handleDeleteInvitee = async () => {
@@ -27,10 +30,11 @@ const InviteeCard = (props) => {
           label: "Sim",
           onClick: async function () {
             try {
-              await axios.post(
-                "http://localhost:8080/api/event/invitee",
-                props
-              );
+              await axios({
+                method: "DELETE",
+                url: "http://localhost:8080/api/event/invitee",
+                data: deleteInviteeProps,
+              });
               window.location.reload();
             } catch (error) {
               console.error(error);
@@ -44,6 +48,9 @@ const InviteeCard = (props) => {
       ],
     });
   };
+
+  const handleBadgeDialog = () => setIsOpen(true);
+  const onDismiss = () => setIsOpen(false);
 
   return (
     <Card className="p-3 m-3">
@@ -76,6 +83,14 @@ const InviteeCard = (props) => {
           <Button onClick={handleQrCode}>
             <HiQrcode /> Enviar QR Code
           </Button>
+          <Button onClick={handleBadgeDialog}>
+            <HiPrinter /> Gerar crachá
+          </Button>
+          <BadgeDialog
+            isOpen={isOpen}
+            onDismiss={onDismiss}
+            name={props.nome}
+          />
           {/* <span>Presente?</span> <Form.Check disabled={isEventStarted} /> */}
           <Button variant="danger" onClick={handleDeleteInvitee}>
             <HiTrash />

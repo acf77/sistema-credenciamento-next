@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Event from "./eventSchema.js";
 
 // interface User {
 //   nome: string;
@@ -25,6 +26,12 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    // events: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Event",
+    //   },
+    // ],
   },
   {
     timestamps: true,

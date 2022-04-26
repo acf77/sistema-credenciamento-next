@@ -13,7 +13,10 @@ export const EventsCard = (event) => {
           <h5>{event.nome}</h5>
           <span>Data: {event.data}</span>
           <span>Local: {event.local}</span>
-          <span>Total de convidados: {event.listaConvidados.length}</span>
+          <span>
+            Total de convidados:{" "}
+            {event.listaConvidados && event.listaConvidados.length}
+          </span>
         </Stack>
         <Stack gap={3}>
           <Link href={`/${event._id}`}>

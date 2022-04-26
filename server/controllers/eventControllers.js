@@ -2,14 +2,20 @@ import nodemailer from "nodemailer";
 import QRCode from "qrcode";
 
 import Event from "../db/models/eventSchema.js";
+import User from "../db/models/userSchema.js";
 
-// @description GET /api / events returns all events
+// @description GET /api/event/all returns all events
 // @access private
 
 const listEventsController = (req, res) => {
+  const { id } = req.params;
+
   const getAllFromDb = async () => {
     try {
-      const event = await Event.find({});
+      // const event = await Event.findById(id).populate("user");
+
+      const event = await Event.where("user").equals(id).populate("user");
+
       res.status(200).json(event);
     } catch (error) {
       res.status(400).json(error.message);
@@ -27,9 +33,10 @@ const createEventController = (req, res) => {
   const addToDb = async () => {
     try {
       const event = await Event.create(body);
-      res.status(200).json(event);
+
+      res.status(200).json(popEvent);
     } catch (error) {
-      res.status(400).json(error);
+      res.status(400).json(error.message);
     }
   };
   addToDb();

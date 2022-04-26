@@ -16,8 +16,10 @@ import { useEffect } from "react";
 
 const LoginPage = () => {
   useEffect(() => {
-    localStorage.getItem("userInfo") && redirect.push("/");
-  });
+    const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    //@ts-ignore
+    sessionStorage.getItem("userInfo") && redirect.push(`/${userInfo.id}`);
+  }, []);
 
   const redirect = useRouter();
 
@@ -37,8 +39,8 @@ const LoginPage = () => {
         loginData
       );
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      redirect.push("/");
+      sessionStorage.setItem("userInfo", JSON.stringify(data));
+      window.location.replace("http://localhost:3000/");
     } catch (error) {
       setAlert(`Email ou senha incorretos. Tente novamente. ${error.message}`);
     }
@@ -81,7 +83,7 @@ const LoginPage = () => {
           gap={5}
           className="justify-content-center"
         >
-          <Link href="/recuperar-senha">
+          <Link href="/esqueci-senha">
             <a>Esqueci a senha</a>
           </Link>
           <Link href="/registrar">

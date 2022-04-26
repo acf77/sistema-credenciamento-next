@@ -2,6 +2,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { HiHome } from "react-icons/hi";
 
+import axios from "axios";
+
 import {
   Button,
   Container,
@@ -12,12 +14,11 @@ import {
 
 import { useDispatch } from "react-redux";
 
-import { addEvent } from "../redux/actions/eventActions";
 import { withAuth } from "../utils/withAuth";
+// import { IEventProps } from "../@types/AddEventProps";
+import useAddEvent from "../hooks/useListEvents";
 
 const AddEventPage = () => {
-  const dispatch = useDispatch();
-
   const [title, setTitle] = useState<string>();
   const [date, setDate] = useState<string>();
   const [local, setLocal] = useState<string>();
@@ -26,7 +27,10 @@ const AddEventPage = () => {
   const [eventContactPhone, setEventContactPhone] = useState<number>();
   const [eventContactEmail, setEventContactEmail] = useState<string>();
 
+  const { id } = JSON.parse(sessionStorage.getItem("userInfo"));
+
   const eventData = {
+    user: id,
     nome: title,
     data: date,
     local: local,
@@ -35,15 +39,28 @@ const AddEventPage = () => {
     responsavelCelular: eventContactPhone,
     responsavelEmail: eventContactEmail,
     isEventStarted: false,
+    listaConvidados: [],
   };
 
-  const handleEventSubmit = (e: any) => {
+  const handleEventSubmit = async (e: any) => {
     e.preventDefault();
-    dispatch(addEvent(eventData));
+    try {
+      await axios({
+        method: "POST",
+        url: "http://localhost:8080/api/events",
+        data: JSON.stringify(eventData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error(error, error.message);
+    }
   };
 
   return (
     <Container>
+      {/* {loading && <span>Loading...</span>} */}
       {/* Home button */}
       <Link href="/">
         <Button className="p-3 m-3">

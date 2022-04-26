@@ -19,11 +19,11 @@ export const AddInviteeDialog = (props) => {
       celular: phone,
       email: email,
       senhas: pass,
-      eventId: props.eventId,
+      eventId: props._id,
     };
 
     try {
-      const call = await axios({
+      await axios({
         method: "PUT",
         url: "http://localhost:8080/api/event/invitee",
         data: inviteeData,
@@ -32,9 +32,7 @@ export const AddInviteeDialog = (props) => {
         },
       });
 
-      console.log(call);
-
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }

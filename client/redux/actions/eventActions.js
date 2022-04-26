@@ -13,32 +13,7 @@ import {
 
 import axios from "axios";
 
-export const addEvent = (eventData) => async (dispatch) => {
-  try {
-    dispatch({
-      type: ADD_EVENT_REQUEST,
-    });
-
-    const call = await axios({
-      method: "POST",
-      url: "http://localhost:8080/api/events",
-      data: JSON.stringify(eventData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    dispatch({
-      type: ADD_EVENT_SUCCESS,
-      payload: call.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ADD_EVENT_FAIL,
-      payload: error.response.data,
-    });
-  }
-};
+export const addEvent = (eventData) => async (dispatch) => {};
 
 //## The actions below are being replaced by getServerSideProps at page render ##
 

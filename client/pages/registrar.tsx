@@ -10,6 +10,7 @@ import {
   Stack,
   Alert,
 } from "react-bootstrap";
+import axios from "axios";
 
 const RegisterPage = () => {
   const [name, setName] = useState<string>();
@@ -17,14 +18,39 @@ const RegisterPage = () => {
   const [phone, setPhone] = useState<number>();
   const [password, setPassword] = useState<string>();
   const [repeatPassword, setRepeatPassword] = useState<string>();
+  const [alert, setAlert] = useState<string>();
+  const [successAlert, setSuccessAlert] = useState<boolean>();
 
-  const handleRegister = () => {};
+  const handleRegister = async () => {
+    const registerData = {
+      name: name,
+      email: email,
+      password: password,
+      phone: phone,
+      events: [],
+    };
+
+    try {
+      await axios.post("http://localhost:8080/api/user/register", registerData);
+
+      setSuccessAlert(true);
+    } catch (error) {
+      setAlert(
+        `Email já registrado. Tente novamente com outro email ou clique em Esqueci a senha. ${error.message}`
+      );
+    }
+  };
 
   return (
     <Row>
       <Col className="p-3 m-3 justify-content-center" sm={10} lg={5}>
-        <Form onSubmit={handleRegister}>
-          <h3>Login</h3>
+        <Form>
+          {successAlert && (
+            <Alert variant="success">
+              Usuário registardo com sucesso! <Link href="/">Entrar</Link>
+            </Alert>
+          )}
+          <h3>Registre-se</h3>
           <FormLabel>Nome</FormLabel>
           <FormControl
             onChange={(e) => setName(e.target.value)}
@@ -40,6 +66,7 @@ const RegisterPage = () => {
           />
           <FormLabel>Celular</FormLabel>
           <FormControl
+            //@ts-ignore
             onChange={(e) => setPhone(e.target.value)}
             type="phone"
             placeholder="Celular com DDD"
@@ -59,17 +86,17 @@ const RegisterPage = () => {
             placeholder="Repita a senha"
             className="mb-3"
           />
-          {password !== repeatPassword ? (
+          {password !== repeatPassword && (
             <Alert variant="danger">Senhas não são iguais.</Alert>
-          ) : (
-            <Alert variant="success">Senhas digitadas são iguais.</Alert>
           )}
+
+          {alert && <Alert variant="danger">{alert}</Alert>}
         </Form>
 
         <Stack>
           <Button
             disabled={password !== repeatPassword}
-            type="submit"
+            onClick={handleRegister}
             className="my-3"
           >
             Cadastre-se
@@ -80,7 +107,7 @@ const RegisterPage = () => {
           gap={5}
           className="justify-content-center"
         >
-          <Link href="/recuperar-senha">
+          <Link href="/esquexi-senha">
             <a>Esqueci a senha</a>
           </Link>
           <Link href="/login">
